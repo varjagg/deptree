@@ -37,11 +37,22 @@
 	      (asdf:system-source-directory (asdf:find-system name)))
 	  dependencies))
 
-(defun systems-archive (dependencies tarball-pathname)
+(defun systems-archive (dependencies tarball-pathname &key (sanitize-p t))
   (let* ((paths (systems-paths dependencies)))
     (tar:with-open-archive (a tarball-pathname :direction :output)
       (loop for p in paths
 	 for dir = (pathname-directory p)
 	 do
 	   (let ((*default-pathname-defaults* (make-pathname :directory (butlast dir))))
-	     (tar-create:create-archive a (last dir) :recursep t))))))
+	     (tar-create:create-archive a (last dir) :recursep t
+					:filter (if sanitize-p
+						    #'(lambda (pathname)
+							(let* ((name (pathname-name pathname))
+							       (marker (if name
+									   (if (pathname-type pathname)
+									       (concatenate 'string (namestring name) "."
+											    (namestring (pathname-type pathname)))
+									       (namestring name))
+									   (namestring (car (last (pathname-directory pathname)))))))
+							  (not (find marker '(".git" ".gitignore" ".hg" ".hgignore") :test #'string=))))
+						    (constantly t))))))))
