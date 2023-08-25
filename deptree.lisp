@@ -38,7 +38,7 @@
 	  dependencies))
 
 (defun systems-archive (dependencies tarball-pathname &key (sanitize-p t))
-  (let* ((paths (systems-paths dependencies)))
+  (let* ((paths (systems-paths (cdr dependencies))))
     (tar:with-open-archive (a tarball-pathname :direction :output)
       (loop for p in paths
 	 for dir = (pathname-directory p)
