@@ -1,5 +1,5 @@
 (asdf:defsystem #:deptree
-  :description "System dependency listing and archiving tool for Common Lisp"
+  :description "ASDF systems dependency listing and archiving tool for Common Lisp"
   :author "Eugene Zaikonnikov <eugene@funcall.org>"
   :license "MIT"
   :serial t
