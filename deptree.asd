@@ -3,5 +3,5 @@
   :author "Eugene Zaikonnikov <eugene@funcall.org>"
   :license "MIT"
   :serial t
-  :depends-on (#:cl-fad #:salza2)
+  :depends-on (#:tar/create)
   :components ((:file "deptree")))
