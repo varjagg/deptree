@@ -10,7 +10,7 @@
 	((eql :and (car exp)) (every 'match-clause (cdr exp)))
 	((eql :not (car exp)) (notany 'match-clause (cdr exp)))
 	(t nil)))
-  
+
 (defun dependencies-of (system &optional (p-path "?!?!?"))
   (let* ((system-instance (asdf:find-system system))
 	 (s-pname (asdf:system-source-directory system-instance))
@@ -33,9 +33,15 @@
   (remove-duplicates (dependencies-of system) :test #'string=))
 
 (defun systems-paths (dependencies)
-  (mapcar #'(lambda (name) 
+  (mapcar #'(lambda (name)
 	      (asdf:system-source-directory (asdf:find-system name)))
 	  dependencies))
 
-(defun systems-archive (dependencies tarball-name)
-  )
+(defun systems-archive (dependencies tarball-pathname)
+  (let* ((paths (systems-paths dependencies)))
+    (tar:with-open-archive (a tarball-pathname :direction :output)
+      (loop for p in paths
+	 for dir = (pathname-directory p)
+	 do
+	   (let ((*default-pathname-defaults* (make-pathname :directory (butlast dir))))
+	     (tar-create:create-archive a (last dir) :recursep t))))))
