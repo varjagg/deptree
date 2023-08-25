@@ -24,7 +24,7 @@ Example: ~(deptree "hunchentoot")~
 
 The resulting list of system names is deduplicated and pruned of dependencies within same system directories.
 
-* Listing dependenies' pathnames
+* Listing dependencies' pathnames
 
 (systems-paths /dependencies/)
 
