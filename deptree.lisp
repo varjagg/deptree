@@ -22,7 +22,7 @@
 			    when (atom d) nconc (dependencies-of d s-path)
 			    when (and (consp d)
 				      (eql (first d) :feature)
-				      (stringp (second d))
+				      (stringp (third d))
 				      (match-clause (second d)))
 			    nconc (cons (third d) (dependencies-of (third d) s-path)))))
 	       (if sub-p
