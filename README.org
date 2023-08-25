@@ -39,7 +39,7 @@ Example: ~(systems-archive (deptree "hunchentoot") #p"/tmp/hunchentoot-deps.tgz"
 Before archiving, make sure the dependencies are in fact present on your host. If you are using Quicklisp it's
 as easy as quickload-ing the system.
 
-All systems directores are stored flat regarless their original absolute pathnames. As feature-conditional
+All systems directories are stored flat regardless their original absolute pathnames. Since feature-conditional
 dependencies are honored, please ensure you're archiving from the relevant platform.
 
-If :sanitize-p is NIL, the function will not clean up git and Mercurial DVCS data from the archives.
+Unless :sanitize-p is NIL, the function clean up git and Mercurial DVCS data from the archives.
