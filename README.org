@@ -36,6 +36,9 @@ Example: ~(systems-paths (deptree "hunchentoot"))~
 
 Example: ~(systems-archive (deptree "hunchentoot") #p"/tmp/hunchentoot-deps.tgz")~
 
+Before archiving, make sure the dependencies are in fact present on your host. If you are using Quicklisp it's
+as easy as quickload-ing the system.
+
 All systems directores are stored flat regarless their original absolute pathnames. As feature-conditional
 dependencies are honored, please ensure you're archiving from the relevant platform.
 
