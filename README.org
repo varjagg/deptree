@@ -42,4 +42,4 @@ as easy as quickload-ing the system.
 All systems directories are stored flat regardless their original absolute pathnames. Since feature-conditional
 dependencies are honored, please ensure you're archiving from the relevant platform.
 
-Unless :sanitize-p is NIL, the function clean up git and Mercurial DVCS data from the archives.
+Unless :sanitize-p is NIL, the function will clean up git and Mercurial DVCS data from the archives.
