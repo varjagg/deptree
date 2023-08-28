@@ -30,7 +30,7 @@
 		   (cons system deps)))))))
 
 (defun deptree (system)
-  (remove-duplicates (dependencies-of system) :test #'string=))
+  (remove-duplicates (cdr (dependencies-of system)) :test #'string=))
 
 (defun systems-paths (dependencies)
   (mapcar #'(lambda (name)
@@ -38,7 +38,7 @@
 	  dependencies))
 
 (defun systems-archive (dependencies tarball-pathname &key (sanitize-p t))
-  (let* ((paths (systems-paths (cdr dependencies))))
+  (let* ((paths (systems-paths dependencies)))
     (tar:with-open-archive (a tarball-pathname :direction :output)
       (loop for p in paths
 	 for dir = (pathname-directory p)
