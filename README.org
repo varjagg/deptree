@@ -32,7 +32,7 @@ Example: ~(systems-paths (deptree "hunchentoot"))~
 
 * Archiving system's dependencies
 
-(systems-archive /dependencies/ /tarball-pathname/ &key (/sanitize-p t/) (/path-prefix ""/))
+(systems-archive /dependencies/ /tarball-pathname/ &key (/sanitize-p t/) (/path-prefix/ ""))
 
 Example: ~(systems-archive (deptree "hunchentoot") #p"/tmp/hunchentoot-deps.tgz")~
 
