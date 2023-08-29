@@ -32,14 +32,15 @@ Example: ~(systems-paths (deptree "hunchentoot"))~
 
 * Archiving system's dependencies
 
-(systems-archive /dependencies/ /tarball-pathname/ &key (/sanitize-p t/))
+(systems-archive /dependencies/ /tarball-pathname/ &key (/sanitize-p t/) (/path-prefix ""/))
 
 Example: ~(systems-archive (deptree "hunchentoot") #p"/tmp/hunchentoot-deps.tgz")~
 
 Before archiving, make sure the dependencies are in fact present on your host. If you are using Quicklisp it's
 as easy as quickload-ing the system.
 
-All systems directories are stored flat regardless their original absolute pathnames. Since feature-conditional
-dependencies are honored, please ensure you're archiving from the relevant platform.
+All systems directories are stored flat (with prepeneded ~:PATH-PREFIX~) regardless their original
+absolute pathnames. Since feature-conditional dependencies are honored, please ensure you're archiving from
+the relevant platform.
 
-Unless :sanitize-p is NIL, the function will clean up git and Mercurial DVCS data from the archives.
+Unless ~:SANITIZE-P~ is NIL, the function will clean up git and Mercurial DVCS data from the archives.

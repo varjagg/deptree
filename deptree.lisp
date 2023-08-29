@@ -37,7 +37,7 @@
 	      (asdf:system-source-directory (asdf:find-system name)))
 	  dependencies))
 
-(defun systems-archive (dependencies tarball-pathname &key (sanitize-p t))
+(defun systems-archive (dependencies tarball-pathname &key (sanitize-p t) (path-prefix ""))
   (let* ((paths (systems-paths dependencies)))
     (tar:with-open-archive (a tarball-pathname :direction :output)
       (loop for p in paths
@@ -45,6 +45,7 @@
 	 do
 	   (let ((*default-pathname-defaults* (make-pathname :directory (butlast dir))))
 	     (tar-create:create-archive a (last dir) :recursep t
+					:prefix path-prefix
 					:filter (if sanitize-p
 						    #'(lambda (pathname)
 							(let* ((name (pathname-name pathname))
