@@ -4,6 +4,8 @@
 
 (in-package #:deptree)
 
+(defparameter *excluded-systems* '("uiop" "asdf" "sb-cltl2" "sb-bsd-sockets" "sb-posix" "sb-rotate-byte"))
+
 (defun match-clause (exp)
   (cond ((atom exp) (member exp *features*))
 	((eql :or (car exp)) (some 'match-clause (cdr exp)))
@@ -30,7 +32,10 @@
 		   (cons system deps)))))))
 
 (defun deptree (system)
-  (remove-duplicates (cdr (dependencies-of system)) :test #'string=))
+  (set-difference
+   (remove-duplicates (cdr (dependencies-of system)) :test #'string=)
+   *excluded-systems*
+   :test #'string=))
 
 (defun systems-paths (dependencies)
   (mapcar #'(lambda (name)
