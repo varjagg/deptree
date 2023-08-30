@@ -60,5 +60,5 @@
 											    (namestring (pathname-type pathname)))
 									       (namestring name))
 									   (namestring (car (last (pathname-directory pathname)))))))
-							  (not (find marker '(".git" ".gitignore" ".hg" ".hgignore") :test #'string=))))
+							  (not (find marker '(".git" ".gitignore" ".hg" ".hgignore" ".github") :test #'string=))))
 						    (constantly t))))))))
