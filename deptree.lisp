@@ -18,18 +18,17 @@
 	 (s-pname (asdf:system-source-directory system-instance))
 	 (s-path (and s-pname (namestring s-pname)))
 	 (sub-p (search p-path s-path))
-	 (dependants (asdf:system-depends-on system-instance)))
-    (cond ((null dependants) nil)
-	  (t (let ((deps (loop for d in dependants
-			    when (atom d) nconc (dependencies-of d s-path)
-			    when (and (consp d)
-				      (eql (first d) :feature)
-				      (stringp (third d))
-				      (match-clause (second d)))
-			    nconc (cons (third d) (dependencies-of (third d) s-path)))))
-	       (if sub-p
-		   deps
-		   (cons system deps)))))))
+	 (dependants (asdf:system-depends-on system-instance))
+	 (deps (loop for d in dependants
+		  when (atom d) nconc (dependencies-of d s-path)
+		  when (and (consp d)
+			    (eql (first d) :feature)
+			    (stringp (third d))
+			    (match-clause (second d)))
+		  nconc (cons (third d) (dependencies-of (third d) s-path)))))
+    (if sub-p
+	deps
+	(cons system deps))))
 
 (defun deptree (system)
   (set-difference
