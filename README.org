@@ -59,4 +59,4 @@ Produces a list of pairs (/system-name/ . /license-string/) for the supplied lis
 
 Example: ~(license-set (deptree "hunchentoot"))~
 
-Produces a mostly deduplicated list of licenses. Variations in character case or hyphenation are collated.
+Produces a mostly deduplicated list of licenses. Variations in character case or hyphens are collated.
