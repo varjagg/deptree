@@ -44,3 +44,17 @@ absolute pathnames. Since feature-conditional dependencies are honored, please e
 the relevant platform.
 
 Unless ~:SANITIZE-P~ is NIL, the function will clean up git and Mercurial DVCS data from the archives.
+
+* Listing systems' licenses
+
+(systems-licenses /systems/)
+
+Example: ~(systems-licenses (deptree "hunchentoot"))~
+
+Produces a list of pairs (/system-name/ . /license-string/) for the supplied list of licenses.
+
+* Collating systems' license set
+
+(license-set /systems/)
+
+Produces a mostly deduplicated list of licenses. Variations in character case or hyphenation are collated.
