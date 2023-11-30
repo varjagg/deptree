@@ -1,6 +1,6 @@
 (defpackage #:deptree
   (:use #:cl)
-  (:export #:deptree #:systems-paths #:systems-archive))
+  (:export #:deptree #:systems-paths #:systems-archive #:systems-licenses #:license-set))
 
 (in-package #:deptree)
 
@@ -61,3 +61,22 @@
 									   (namestring (car (last (pathname-directory pathname)))))))
 							  (not (find marker '(".git" ".gitignore" ".hg" ".hgignore" ".github") :test #'string=))))
 						    (constantly t))))))))
+(defun systems-licenses (systems)
+  (mapcar #'(lambda (s) (cons s (or (asdf:system-license (asdf:find-system s))
+				    "UNKNOWN")))
+	  systems))
+
+(defun hyphen-difference-p (a b)
+  (when (= (length a) (length b))
+    (loop for c1 across a
+	  for c2 across b
+	  unless (or (char-equal c1 c2)
+		     (= (length (intersection (list c1 c2) '(#\Space #\-))) 2))
+	    do (return-from hyphen-difference-p nil))
+    t))
+
+(defun license-set (systems)
+  (remove-duplicates (mapcar #'cdr (systems-licenses systems))
+		     :test #'(lambda (a b)
+			       (or (string-equal a b)
+				   (hyphen-difference-p a b)))))
